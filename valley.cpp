@@ -9,14 +9,15 @@ class Task {
     }
 
  private:
-    int n;
+    unsigned int n;
     vector<unsigned long long int> mountain;
 
     void read_input() {
+        unsigned int i;
         ifstream fin("valley.in");
         fin >> n;
         int peak;
-        for (int i = 0; i < n; i++) {
+        for (i = 0; i < n; i++) {
             fin >> peak;
             mountain.push_back(peak);
         }
@@ -43,7 +44,7 @@ class Task {
         time_decreasing.push_back(0);
         time_ascending.push_back(0);
         // calculate the partial time for every mountain peek to be decreasing
-        // so the split of the mountain will be on the peultimate peek
+        // so the split of the mountain will be on the peunltimate peek
         for (i = 2, j = 1; i < n - 2; i++, j++) {
             if (copy_mountain[i] > copy_mountain[i - 1]) {
                 time_decreasing.push_back(time_decreasing[j - 1] +
@@ -67,7 +68,7 @@ class Task {
         unsigned int sums_length = time_decreasing.size();
         long long unsigned int min_split = LONG_LONG_MAX;
         // choose the best place where to split the prefix and the sufix
-        for (i = 0, j = sums_length - 1; i < sums_length && j >= 0; i++, j--) {
+        for (i = 0, j = sums_length - 1; i < sums_length; i++, j--) {
             if (time_decreasing[i] + time_ascending[j] < min_split) {
                 min_split = time_decreasing[i] + time_ascending[j];
             }
