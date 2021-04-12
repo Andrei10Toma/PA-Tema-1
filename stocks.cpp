@@ -92,7 +92,7 @@ class Task {
                         dp[i][j][k] = max(dp[i - 1][j][k],
                             dp[i - 1][remaining][k - loss] + profit);
                     }
-                    // extract the from all of the cells
+                    // extract the naximum from all of the cells
                     if (dp[i][j][k] > max_profit) max_profit = dp[i][j][k];
                 }
             }

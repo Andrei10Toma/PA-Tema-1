@@ -35,9 +35,10 @@ class Task {
     long long int ridge() {
         unsigned int i;
         // the vector is a vector of triplets
-        // first element the cost if the peek is not digged
-        // second element the cost if the peek is digged one time
-        // third element the cost if the peek is digged two times
+        // a peek can be digged maximum 2 times, to achieve a minimum cost
+        // first element - the cost if the peek is not digged
+        // second element - the cost if the peek is digged one time
+        // third element - the cost if the peek is digged two times
         vector<pair<long long int,
             pair<long long int, long long int>>> dp(n);
         // base case
@@ -66,7 +67,7 @@ class Task {
                 dp[i].first = min(dp[i].first, dp[i - 1].second.second);
             }
             // find the best choice (lowest cost one) digging only one time in
-            // the current peek
+            // the current peek and digging in the previous peek if it is needed
             if (mountain[i].height - 1 != mountain[i - 1].height) {
                 dp[i].second.first = min(dp[i].second.first, dp[i - 1].first);
             }
@@ -80,11 +81,13 @@ class Task {
                 dp[i].second.first = min(dp[i].second.first,
                     dp[i - 1].second.second);
             }
+            // after the minimum cost is found add the current peek cost to the
+            // found minimum
             dp[i].second.first += mountain[i].cost;
-            // find the best choice (lowest cost one) digging two times in the
-            // current peek
             // check if the current peek can be digged two times into it
             if (mountain[i].height - 2 >= 0) {
+                // find the best choice (lowest cost one) digging two times in
+                // the current peek and digging in the previous peek 
                 if (mountain[i].height - 2 != mountain[i - 1].height) {
                     dp[i].second.second = min(dp[i].second.second,
                         dp[i - 1].first);
@@ -99,6 +102,8 @@ class Task {
                     dp[i].second.second = min(dp[i].second.second,
                         dp[i - 1].second.second);
                 }
+                // after the minimum cost is found add the current peek cost to
+                // the found minimum
                 dp[i].second.second += 2 * mountain[i].cost;
             }
         }

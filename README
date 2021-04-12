@@ -1,0 +1,99 @@
+    Toma Andrei 321CB
+
+    crypto:
+    The solve of the problem is done in the crypto function from the crypto.cpp
+file. The approach I made was the following. I used two variables left_p and
+right_p (the interval in which the possible upgrades are searched). To make the
+computer network mine a number of coins all the computers must have the same 
+power to product that amount of money. The network will be capable of producing
+the {minimum power of the computers} coins. Initially left_p and right_p will be
+0 and MAX_P (10^9). For every step the middle of the interval is calculated and 
+the sum Gigel can afford to pay is reseted. For every computer check if the
+upgrade from the middle of the interval can be done with the sum that Gigel has.
+If the upgrade has to be done (the power of the computer is less than the one
+from the middle of the interval) update the sum decreasing the cost of the
+upgrades. If the sum becomes less than 0 the right_p is updated with mid - 1 and
+start searching again. If the upgrade from the midle of the interval can be done
+for every computer left_p will be updated and the profit will be the middle
+value. The steps are executed while left_p <= right_p.
+    Time complexity: O(n * log (MAX(P))) (for every mid of the interval I will
+iterat through the computer vector).
+    Space complexity: O(1)
+
+    stocks:
+    The solve of the problem is done in the stock function form the stocks.cpp
+file. The problem is similar to the knapsack problem with the difference that
+is in 3 dimmensions. I will keep track of 3 metrics: number of stocks (n), b
+(budget), max loss (l). The base cases are for n = 0 (the nunber of first n 
+stocks is 0), for b = 0 (the budget is 0) and l = 0 (the maximum loss accepted
+is 0). After the base cases are done I will iterate through the three 
+dimensional matrix. If the budget is not enough the actual profit will be the
+same with the one from the previous step. Otherwise, I will calculate the
+potential loss for the current stock. If the loss is bigger than the maximum
+accepted loss the profit will be the same with the one from the previous step.
+Otherwise, I calculate the potential profit and the remaining budget after Gigel
+invests in the current stock. After this metrics are calculated, the current
+field of the matrix will be updated with the maximum value from the previous
+problem and the profit obtained from buying the current stock and the subproblem
+with the just calculated metrics. The maximum profit will be the maximum of all
+of the cells from the matrix.
+    Time complexity: O(n * b * l) (iterate through the whole matrix)
+    Space complexity: O(n * b * l) (the space for the matrix)
+
+    valley:
+    The problem is solved in the valley function from the valley.cpp file.
+Initial, I will set the second peek of the mountain vector to be in descending
+order with the first peek from the mountain, and the penultimate peek to be in
+ascending order with the last peek from the mountain vector. Doing this I will
+make sure that the prefix and sufix will have the length 2. Also I will mantain
+the number of hours needed to do this actions. After, I will make three vectors:
+one that will have the copy of the mountain and two that will have the partial
+sum of the time spent to make all the peeks in descending order and in ascending
+order. First, I will calculate the partial sums of the time spent to make the
+mountain have the peeks in descending order, and after I will make the sum for
+peeks to be in ascending order. For the descending order the split for the
+prefix and the sufix will be on the penultimate peek and for the ascending order
+the split will be on the second peek. Then I will calculate where the split
+should be done based on the partial sum of times calculated at the
+previous steps (only the ascending order cost, one decreasing order element and
+ascending_vector.size() - 1 elements from the ascending vector and so on until
+I will choose all the decreasing order peeks). Finally, return the sum of the 
+minimum hours from the initial part and the chosen minimum split.
+    Time complexity: O(n)
+    Space complexity: O(3 * n) = O(n) (space for the three vectors mentioned)
+
+    ridge:
+    The problem is solved in the ridge function from the ridge.cpp file. To 
+solve the problem I will use dynamic programming with a vector of triplets
+(pair of pairs). The major observation for this problem is that a peek will be
+digged maximum 2 times and that's why I will have a vector of triplets. The
+index of the vector dp will contain the costs associated to the peek with the
+index of the vector. The first element of the triplet will represent the cost
+of the peek if it will not be digged, the second element will be the cost of the
+peek if it is digged one time and the third element will be the cost of the peek
+if it is digged two times. The base case will contain information about the
+first peek of the mountain (first field of the triplet will be 0 because the
+peek is not digged, the second will be the cost of the dig and the last will be
+the double of the cost if it is possible and if you can dig in the peek 2 times
+without going under the level of the sea). After, we will fill the dynamic
+programming vector based on the previous peek. Initial, every field of the
+triplet will be initialized with the maximum value of long long. First, I will
+calculate the first element of the triplet from the current peek.
+I will check how Gigel can dig extracting the minimum cost. If the heights are
+not equal we can left the previous peek undigged and the current undigged. If
+the heights are not equal by digging only one time in the previous peek we will
+recalculate the minimum with the previous calculated first element of the
+triplet and with the second element of the triplet from the previous peek. Also,
+if the previous peek can be digged two times and if the heights are not equal by
+digging two times in the previous peek we will recalculate the minimum with the
+previous calculated first element of the triplet and with the third element of
+the triplet from the previous peek. For the second and third element in the
+triplet of the current peek, they will be calculated with the same strategy
+as the previous one (the first element of the triplet) with the difference that
+we will verify by digging one time and two times in the current peek. Also the
+difference will be that after I calculate we will add the cost of the current
+peek (second element of the triplet) or the double of the cost of the current
+peek (third element of the triplet). Another difference is for the last element
+of the triplet that will be verified if it can be digged without going sub-zero.
+    Time complexity: O(n)
+    Space complexity: O(n) (the dynamic programming vector)

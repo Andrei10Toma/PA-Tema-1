@@ -23,7 +23,7 @@ class Task {
         }
     }
 
-    unsigned long long int  valley() {
+    unsigned long long int valley() {
         unsigned int i, j;
         unsigned long long int min_hours = 0;
         // set the second peek of the mountain and the penultimae peek of the
@@ -66,7 +66,7 @@ class Task {
             }
         }
         unsigned int sums_length = time_decreasing.size();
-        long long unsigned int min_split = LONG_LONG_MAX;
+        unsigned long long int min_split = LONG_LONG_MAX;
         // choose the best place where to split the prefix and the sufix
         for (i = 0, j = sums_length - 1; i < sums_length; i++, j--) {
             if (time_decreasing[i] + time_ascending[j] < min_split) {
